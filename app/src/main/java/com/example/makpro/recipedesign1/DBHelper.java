@@ -37,10 +37,11 @@ public class DBHelper extends SQLiteOpenHelper {
                 +"Rec_Cuisine_ID integer,"
                 +"Rec_Category_ID integer,"
                 +"Rec_Cooking_method_ID integer,"
+                +"Rec_Time_ID integer,"
                 +"Description_cooking_method text,"
                 +"Recipe_name text,"
-                +"Caloric_content text,"
-                +"Rec_Author_ID integer" + ");");
+                +"Caloric_content text"
+                + ");");
 
         //создаем таблицу !КУХНЯ!------------------
         db.execSQL("create table Cuisine("
@@ -63,8 +64,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 + "Comp_ID integer primary key,"
                 + "Comp_Ingredient_ID integer,"
                 + "Comp_recipe_ID integer,"
-                + "Comp_Unit_measure_ID integer,"
-                + "Quantity integer" + ");");
+                + ");");
 
         //создаем таблицу !ВРЕМЯ!---------------
         db.execSQL("create table Time ("
@@ -127,9 +127,52 @@ public class DBHelper extends SQLiteOpenHelper {
             db.insert("Cooking_method",null,contentValues);
         }
 
+        //заполнение таблицы !ВРЕМЯ!
 
+        String[] time_name = res.getStringArray(R.array.Time_name);
+        int[]  time_id = res.getIntArray(R.array.Time_ID);
 
+        for (int i=0; i<time_id.length;i++){
+            contentValues.clear();
+            contentValues.put("Time_ID",time_id[i]);
+            contentValues.put("Time_name",time_name[i]);
+            db.insert("Time",null,contentValues);
+        }
 
+        //заполнение таблицы !ЕДИНИЦЫ ИЗМЕРЕНИЯ!
+
+        String[] unit_measure_name= res.getStringArray(R.array.Unit_measure_name);
+        int[]  unit_measure_id = res.getIntArray(R.array.Unit_measure_ID);
+
+        for (int i=0; i<unit_measure_id.length;i++){
+            contentValues.clear();
+            contentValues.put("Unit_measure_ID",unit_measure_id[i]);
+            contentValues.put("Unit_measure_name",unit_measure_name[i]);
+            db.insert("Unit_measure",null,contentValues);
+        }
+
+        //заполняем таблицу ингредиентов
+
+        String[] ingredient_name= res.getStringArray(R.array.Ingredient_name);
+        int[]  ingredient_id = res.getIntArray(R.array.Ingredient_id);
+
+        for (int i=0; i<ingredient_id.length;i++){
+            contentValues.clear();
+            contentValues.put("Ingredient_ID",ingredient_id[i]);
+            contentValues.put("Ingredient_name",ingredient_name[i]);
+            db.insert("Ingredient",null,contentValues);
+        }
+//----------------------------------------ВЕЛИКИЙ И МОГУЧИЙ ПРИМЕР--------------------------------
+        contentValues.clear();
+        contentValues.put("Recipe_ID",1);
+        contentValues.put("Rec_Cuisine_ID",2);
+        contentValues.put("Rec_Category_ID",11);
+        contentValues.put("Rec_Cooking_method_ID",16);
+        contentValues.put("Rec_Time_ID",1002);
+        contentValues.put("Description_cooking_method","Крутое блюдо готовиться только так");
+        contentValues.put("Recipe_name","Крутое блюдо");
+        contentValues.put("Caloric_content","150ккал");
+        db.insert("Recipe",null,contentValues);
 
 
 

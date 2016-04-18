@@ -96,11 +96,28 @@ public class FragmentIngridients extends Fragment implements View.OnClickListene
         txt.setText(tmp);
         for (int i=0; i<staticString.str.size(); i++) {
             if (i!=staticString.str.size()-1)
-            tmp+=staticString.str.get(i)+" & ";
+            tmp+=staticString.str.get(i)+" or ";
             else
                 tmp+=staticString.str.get(i);
         }
         txt.setText(tmp);
+//-------------------------------------------------------------------------------------------------
+        String chislo = Integer.toString(staticString.str.size());
+        String inquiry = "select Recipe_name, Cuisine_name, Category_name, Method_name, Time_name, Description_cooking_method, Caloric_content"
+                +"from Recipe "
+                +"inner join Cuisine on Rec_Cuisine_ID = Cuisine_ID "
+                +"inner join Category on Rec_Category_ID = Category_ID "
+                +"inner join Cooking_method on Rec_Cooking_method_ID = Cooking_method_ID "
+                +"inner join Time on Rec_Time_ID = Time_ID "
+                +"inner join Composition on Recipe_ID = Comp_recipe_ID "
+                +"where Recipe_ID in "
+                +"(select Recipe_ID "
+                +"from Composition "
+                +"inner join Recipe on Recipe_ID = Comp_Recipe_ID "
+                +"where"+ tmp + " group by Recipe_ID "
+                +"having count(Comp_ingredient_ID)="+chislo +" order by Recipe_ID) "
+                +"group by Recipe_ID";
+//-----------11--------------------------------------------------------------------------------------
         return view;
     }
 
@@ -154,4 +171,5 @@ public class FragmentIngridients extends Fragment implements View.OnClickListene
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }
