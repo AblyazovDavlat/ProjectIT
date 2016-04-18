@@ -13,7 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="748dp"
         android:id="@+id/scrollView"
-        android:layout_weight="0.2">
+        android:layout_weight="0.2"
+        android:fillViewport="false">
 
         <LinearLayout
             android:orientation="vertical"
