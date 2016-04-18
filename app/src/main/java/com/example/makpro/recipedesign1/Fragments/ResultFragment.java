@@ -1,56 +1,36 @@
 package com.example.makpro.recipedesign1.Fragments;
 
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-//import android.support.v4.app.Fragment;
-import  android.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.makpro.recipedesign1.R;
-import com.example.makpro.recipedesign1.staticString;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
-
-//import android.support.v7.app.AppCompatActivity;
-//import android.support.v4.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FragmentIngridients.OnFragmentInteractionListener} interface
+ * {@link ResultFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link FragmentIngridients#newInstance} factory method to
+ * Use the {@link ResultFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-
-public class FragmentIngridients extends Fragment implements View.OnClickListener{
+public class ResultFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    Button meatB, veganB, result;
-    View view;
-    MeatFragment mF;
-    vegetableFragment vF;
-    ResultFragment rF;
-    TextView txt;
-    FragmentTransaction fTrans;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
-    public FragmentIngridients() {
+    public ResultFragment() {
         // Required empty public constructor
     }
 
@@ -60,11 +40,11 @@ public class FragmentIngridients extends Fragment implements View.OnClickListene
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentIngridients.
+     * @return A new instance of fragment ResultFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentIngridients newInstance(String param1, String param2) {
-        FragmentIngridients fragment = new FragmentIngridients();
+    public static ResultFragment newInstance(String param1, String param2) {
+        ResultFragment fragment = new ResultFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -75,10 +55,6 @@ public class FragmentIngridients extends Fragment implements View.OnClickListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mF = new MeatFragment();
-        vF = new vegetableFragment();
-        rF = new ResultFragment();
-        staticString.str = new ArrayList<String>();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -88,24 +64,8 @@ public class FragmentIngridients extends Fragment implements View.OnClickListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        String tmp = "";
-        view = inflater.inflate(R.layout.fragment_fragment_ingridients, container, false);
-        meatB = (Button) view.findViewById(R.id.meatButton);
-        veganB = (Button) view.findViewById(R.id.vegetableButton);
-        result = (Button) view.findViewById(R.id.search);
-        result.setOnClickListener(this);
-        meatB.setOnClickListener(this);
-        veganB.setOnClickListener(this);
-        txt = (TextView) view.findViewById(R.id.textView2);
-        txt.setText(tmp);
-        for (int i=0; i<staticString.str.size(); i++) {
-            if (i!=staticString.str.size()-1)
-            tmp+=staticString.str.get(i)+" & ";
-            else
-                tmp+=staticString.str.get(i);
-        }
-        txt.setText(tmp);
-        return view;
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_result, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -129,30 +89,12 @@ public class FragmentIngridients extends Fragment implements View.OnClickListene
         mListener = null;
     }
 
-    @Override
-    public void onClick(View v) {
-        fTrans = getFragmentManager().beginTransaction();
-        switch(v.getId()) {
-            case R.id.meatButton:
-                fTrans.replace(R.id.conteiner, mF);
-                break;
-            case R.id.vegetableButton:
-                fTrans.replace(R.id.conteiner, vF);
-                break;
-            case R.id.search:
-                fTrans.replace(R.id.conteiner, rF);
-                break;
-        }
-        fTrans.addToBackStack(null);
-        fTrans.commit();
-    }
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p/>
+     * <p>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
