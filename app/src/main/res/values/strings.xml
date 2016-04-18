@@ -218,4 +218,48 @@
         <item>17</item>
         <item>18</item>
     </integer-array>
+
+    //Время
+    <string-array name="Time_name">
+        <item>10 минут</item>
+        <item>15 минут</item>
+        <item>20 минут</item>
+        <item>30 минут</item>
+        <item>50 минут</item>
+        <item>1 час</item>
+        <item>более 1 час</item>
+    </string-array>
+
+    //id способа приготовления
+    <integer-array name="Time_ID">
+        <item>1001</item>
+        <item>1002</item>
+        <item>1003</item>
+        <item>1004</item>
+        <item>1005</item>
+        <item>1006</item>
+        <item>1007</item>
+    </integer-array>
+
+    //единицы измерения
+    <string-array name="Unit_measure_name">
+        <item>гр</item>
+        <item>мл</item>
+        <item>л</item>
+        <item>ложка/ложек</item>
+        <item>штука/штук</item>
+        <item>банка/банок</item>
+        <item>кубик/кубиков</item>
+    </string-array>
+
+    //id способа приготовления
+    <integer-array name="Unit_measure_ID">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </integer-array>
 </resources>
