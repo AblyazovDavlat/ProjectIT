@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.app.Fragment;
 //import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -41,6 +42,8 @@ public class MeatFragment extends Fragment implements View.OnClickListener {
     CheckBox rabbit;
     CheckBox bear;
     Button apply;
+    Button choose_all;
+    Fragment fr;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -72,6 +75,7 @@ public class MeatFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fr = this;
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -140,6 +144,15 @@ public class MeatFragment extends Fragment implements View.OnClickListener {
                FragmentTransaction ft = fm.beginTransaction();
                ft.commit();
            }
+        });
+        choose_all = (Button) view.findViewById(R.id.choose_all);
+        choose_all.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                
+            }
         });
         return view;
     }
