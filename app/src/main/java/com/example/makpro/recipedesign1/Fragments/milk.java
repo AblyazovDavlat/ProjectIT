@@ -1,56 +1,49 @@
 package com.example.makpro.recipedesign1.Fragments;
 
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 //import android.support.v4.app.Fragment;
-import  android.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-
+import android.widget.CheckBox;
+import android.view.LayoutInflater;
 import com.example.makpro.recipedesign1.R;
 import com.example.makpro.recipedesign1.staticString;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
-
-//import android.support.v7.app.AppCompatActivity;
-//import android.support.v4.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FragmentIngridients.OnFragmentInteractionListener} interface
+ * {@link milk.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link FragmentIngridients#newInstance} factory method to
+ * Use the {@link milk#newInstance} factory method to
  * create an instance of this fragment.
  */
-
-public class FragmentIngridients extends Fragment implements View.OnClickListener{
+public class milk extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    Button meatB, veganB, milkB;
     View view;
-    MeatFragment mF;
-    vegetableFragment vF;
-    milk milkF;
-    TextView txt;
-    FragmentTransaction fTrans;
+    CheckBox milk;
+    CheckBox cheese;
+    CheckBox curd;
+    CheckBox sour;
+    CheckBox cream;
+    Button apply;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
-    public FragmentIngridients() {
+    public milk() {
         // Required empty public constructor
     }
 
@@ -60,11 +53,11 @@ public class FragmentIngridients extends Fragment implements View.OnClickListene
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentIngridients.
+     * @return A new instance of fragment milk.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentIngridients newInstance(String param1, String param2) {
-        FragmentIngridients fragment = new FragmentIngridients();
+    public static milk newInstance(String param1, String param2) {
+        milk fragment = new milk();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -75,10 +68,6 @@ public class FragmentIngridients extends Fragment implements View.OnClickListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mF = new MeatFragment();
-        vF = new vegetableFragment();
-        milkF = new milk();
-        staticString.str = new ArrayList<String>();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -87,24 +76,60 @@ public class FragmentIngridients extends Fragment implements View.OnClickListene
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        String tmp = "";
-        view = inflater.inflate(R.layout.fragment_fragment_ingridients, container, false);
-        meatB = (Button) view.findViewById(R.id.meatButton);
-        veganB = (Button) view.findViewById(R.id.vegetableButton);
-        milkB = (Button) view.findViewById(R.id.milkButton);
-        milkB.setOnClickListener(this);
-        meatB.setOnClickListener(this);
-        veganB.setOnClickListener(this);
-        txt = (TextView) view.findViewById(R.id.textView2);
-        txt.setText(tmp);
-        for (int i=0; i<staticString.str.size(); i++) {
-            if (i!=staticString.str.size()-1)
-            tmp+=staticString.str.get(i)+" & ";
-            else
-                tmp+=staticString.str.get(i);
-        }
-        txt.setText(tmp);
+                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_milk,container, false);
+        apply = (Button) view.findViewById(R.id.milkApply);
+        milk = (CheckBox) view.findViewById(R.id.milkBox);
+        cheese = (CheckBox) view.findViewById(R.id.cheeseBox);
+        curd = (CheckBox) view.findViewById(R.id.curdBox);
+        sour = (CheckBox) view.findViewById(R.id.sourBox);
+        cream = (CheckBox) view.findViewById(R.id.creamBox);
+        apply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (milk.isChecked())
+                {
+                    staticString.str.remove("milk");
+                    staticString.str.add("milk");
+                }
+                else
+                    staticString.str.remove("milk");
+                if (cheese.isChecked())
+                {
+                    staticString.str.remove("cheese");
+                    staticString.str.add("cheese");
+                }
+                else
+                    staticString.str.remove("cheese");
+                if (curd.isChecked())
+                {
+                    staticString.str.remove("kefir");
+                    staticString.str.add("kefir");
+                }
+                else
+                    staticString.str.remove("kefir");
+                if (sour.isChecked())
+                {
+                    staticString.str.remove("sour");
+                    staticString.str.add("sour");
+                }
+                else
+                    staticString.str.remove("sour");
+                if (cream.isChecked())
+                {
+                    staticString.str.remove("cream");
+                    staticString.str.add("cream");
+                }
+                    else
+                        staticString.str.remove("cream");
+
+                FragmentManager fm = getFragmentManager();
+                fm.popBackStack();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.commit();
+            }
+        });
         return view;
     }
 
@@ -127,24 +152,6 @@ public class FragmentIngridients extends Fragment implements View.OnClickListene
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    @Override
-    public void onClick(View v) {
-        fTrans = getFragmentManager().beginTransaction();
-        switch(v.getId()) {
-            case R.id.meatButton:
-                fTrans.replace(R.id.conteiner, mF);
-                break;
-            case R.id.vegetableButton:
-                fTrans.replace(R.id.conteiner, vF);
-                break;
-            case R.id.milkButton:
-                fTrans.replace(R.id.conteiner, milkF);
-                break;
-        }
-        fTrans.addToBackStack(null);
-        fTrans.commit();
     }
 
     /**
